@@ -1,15 +1,31 @@
 import express from "express";
 
-const app = express();
-const PORT: Number = 3000;
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
+const cors = require("cors");
 
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const port: string = process.env.PORT || "3001";
 app.get("/", (req, res) => {
   res.send(`Server is online`);
 });
 
 // Server setup
-app.listen(PORT, () => {
+app.listen(port, () => {
   console.log(
-    "The application is listening " + "on port http://localhost:" + PORT
+    "The application is listening " + "on port http://localhost:" + port
   );
 });
+
+mongoose
+  .connect(process.env.DB_URL)
+  .then(() => {
+    console.log("DB Connetion Successfull");
+  })
+  .catch((err: any) => {
+    console.log(err.message);
+  });
