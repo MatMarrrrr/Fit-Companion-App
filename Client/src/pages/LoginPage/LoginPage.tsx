@@ -92,6 +92,13 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 1.5rem;
 
+  p {
+    display: flex;
+    justify-content: center;
+    color: ${(props) => props.theme.textColorPrimary};
+    font-family: "Inter", sans-serif;
+  }
+
   input[type="text"],
   input[type="password"],
   input[type="email"],

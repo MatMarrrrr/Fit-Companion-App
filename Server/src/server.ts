@@ -21,7 +21,6 @@ if (!dbUrl) {
 mongoose
   .connect(dbUrl)
   .then(() => {
-
     app.use("/api/auth", userRoutes);
 
     console.log("DB Connection Successful");
@@ -32,4 +31,3 @@ mongoose
   .catch((err) => {
     console.error("DB Connection Error:", err.message);
   });
-
