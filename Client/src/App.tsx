@@ -15,10 +15,10 @@ interface Theme {
 }
 
 const LightTheme: Theme = {
-  bodyColor: "#B0ACAB",
+  bodyColor: "#FAFAFA",
   pageBackground: "#e0e0e0",
   primaryColor: "#D9D9D9 ",
-  SecondaryColor: "#616161",
+  SecondaryColor: "#424242",
   textColorPrimary: "#424242",
   textColorSecondary: "#FAFAFA",
   boxShadow: "rgba(0, 0, 0, 0.3)",
@@ -26,7 +26,7 @@ const LightTheme: Theme = {
 };
 
 const DarkTheme: Theme = {
-  bodyColor: "#393939",
+  bodyColor: "#424242",
   pageBackground: "#121217",
   primaryColor: "#212121",
   SecondaryColor: "#F5F5F5",
@@ -42,7 +42,7 @@ const themes: Record<string, Theme> = {
 };
 
 const App: React.FC = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
 
   return (
     <ThemeProvider theme={themes[theme]}>

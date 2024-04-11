@@ -85,3 +85,102 @@ const Inputs = styled.div`
     }
   }
 `;
+
+export const Form = styled.form`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="date"],
+  select {
+    background-color: ${(props) => props.theme.SecondaryColor};
+    color: ${(props) => props.theme.primaryColor};
+    height: 3rem;
+    padding-left: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+
+    &::placeholder {
+      color: ${(props) => props.theme.textColorSecondary};
+    }
+
+    .error {
+      background-color: red;
+    }
+  }
+
+  input[type="date"] {
+    width: 62%;
+
+    border-right: 10px solid transparent;
+  }
+
+  select {
+    width: 30%;
+
+    border-right: 10px solid transparent;
+  }
+  option {
+    font-size: 1.15rem;
+  }
+
+  .checkbox {
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    margin: 0;
+
+    input[type="checkbox"] {
+      margin: 0;
+      cursor: pointer;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      padding-left: 1rem;
+      color: ${(props) => props.theme.textColorPrimary};
+      font-size: 1rem;
+      font-family: "Inter", sans-serif;
+      cursor: pointer;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .submitButton {
+    display: flex;
+    justify-content: flex-end;
+
+    input[type="submit"],
+    button {
+      background-color: ${(props) => props.theme.SecondaryColor};
+      color: ${(props) => props.theme.textColorSecondary};
+      padding-left: 0rem;
+      width: 10rem;
+      height: 3rem;
+      border-radius: 0.5rem;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Inter", sans-serif;
+    }
+  }
+
+  .sex-birth {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
