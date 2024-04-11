@@ -1,31 +1,35 @@
 import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+import userRoutes from "./routes/auth";
 
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 dotenv.config();
-const cors = require("cors");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const port: string = process.env.PORT || "3001";
-app.get("/", (req, res) => {
-  res.send(`Server is online`);
-});
+const port = process.env.PORT || "3001";
 
-// Server setup
-app.listen(port, () => {
-  console.log(
-    "The application is listening " + "on port http://localhost:" + port
-  );
-});
+const dbUrl = process.env.DB_URL;
+if (!dbUrl) {
+  console.error("DB_URL not specified in .env file");
+  process.exit(1);
+}
 
 mongoose
-  .connect(process.env.DB_URL)
+  .connect(dbUrl)
   .then(() => {
-    console.log("DB Connetion Successfull");
+
+    app.use("/api/auth", userRoutes);
+
+    console.log("DB Connection Successful");
+    app.listen(port, () => {
+      console.log(`The application is listening on http://localhost:${port}`);
+    });
   })
-  .catch((err: any) => {
-    console.log(err.message);
+  .catch((err) => {
+    console.error("DB Connection Error:", err.message);
   });
+
