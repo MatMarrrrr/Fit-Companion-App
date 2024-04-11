@@ -64,13 +64,14 @@ const Form = styled.form`
     padding-left: 1rem;
     border: none;
     border-radius: 0.5rem;
+    font-family: "Inter", sans-serif;
 
     &:first-child {
       margin-bottom: 1.5rem;
     }
 
     &::placeholder {
-      color: ${(props) => props.theme.primaryColor};
+      color: ${(props) => props.theme.textColorSecondary};
     }
   }
 
@@ -88,11 +89,10 @@ const Form = styled.form`
     label {
       display: flex;
       align-items: center;
-      padding: 0.1rem 0 0 1rem;
-      color: ${(props) => props.theme.SecondaryColor};
+      padding-left: 1rem;
+      color: ${(props) => props.theme.textColorPrimary};
       font-size: 1rem;
       font-family: "Inter", sans-serif;
-      font-weight: 300;
       cursor: pointer;
     }
   }
@@ -102,14 +102,18 @@ const Form = styled.form`
     justify-content: flex-end;
 
     input[type="submit"] {
+      background-color: ${(props) => props.theme.SecondaryColor};
+      color: ${(props) => props.theme.textColorSecondary};
       padding-left: 0rem;
       width: 10rem;
       height: 3rem;
       border-radius: 0.5rem;
+      border: none;
       font-size: 1.25rem;
       cursor: pointer;
       display: flex;
       justify-content: center;
+      font-family: "Inter", sans-serif;
     }
   }
 `;

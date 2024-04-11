@@ -81,7 +81,7 @@ const Inputs = styled.div`
     }
 
     .selected {
-      color: ${(props) => props.theme.SecondaryColor};
+      color: ${(props) => props.theme.textColorPrimary};
     }
   }
 `;

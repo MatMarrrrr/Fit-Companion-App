@@ -1,4 +1,4 @@
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./globalStyles";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import { useState } from "react";
@@ -8,7 +8,7 @@ interface Theme {
   pageBackground: string;
   primaryColor: string;
   SecondaryColor: string;
-  textColor: string;
+  textColorPrimary: string;
   textColorSecondary: string;
   boxShadow: string;
   name: string;
@@ -17,10 +17,10 @@ interface Theme {
 const LightTheme: Theme = {
   bodyColor: "#B0ACAB",
   pageBackground: "#e0e0e0",
-  primaryColor: "#cfd8dc ",
-  SecondaryColor: "#D9D9D9",
-  textColor: "#393939",
-  textColorSecondary: "#363636",
+  primaryColor: "#D9D9D9 ",
+  SecondaryColor: "#616161",
+  textColorPrimary: "#424242",
+  textColorSecondary: "#FAFAFA",
   boxShadow: "rgba(0, 0, 0, 0.3)",
   name: "light",
 };
@@ -28,10 +28,10 @@ const LightTheme: Theme = {
 const DarkTheme: Theme = {
   bodyColor: "#393939",
   pageBackground: "#121217",
-  primaryColor: "#242424",
-  SecondaryColor: "#FAF9F6",
-  textColor: "#E3E3E3",
-  textColorSecondary: "#717171",
+  primaryColor: "#212121",
+  SecondaryColor: "#F5F5F5",
+  textColorPrimary: "#EEEEEE",
+  textColorSecondary: "#424242",
   boxShadow: "rgba(0, 0, 0, 0.5)",
   name: "dark",
 };
@@ -42,7 +42,7 @@ const themes: Record<string, Theme> = {
 };
 
 const App: React.FC = () => {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
 
   return (
     <ThemeProvider theme={themes[theme]}>

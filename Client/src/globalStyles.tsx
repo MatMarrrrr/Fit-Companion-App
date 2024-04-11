@@ -22,7 +22,7 @@ body {
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: ${(props) => props.theme.textColor};
+    background-color: ${(props) => props.theme.textColorPrimary};
     border-radius: 6px;
   }
   
