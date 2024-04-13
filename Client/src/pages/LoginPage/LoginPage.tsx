@@ -45,6 +45,7 @@ const Container = styled.article`
 
   .left-side {
     width: 30%;
+    min-width: 20rem;
 
     .logo {
       width: 6rem;
@@ -54,6 +55,8 @@ const Container = styled.article`
 
   .right-side {
     width: 70%;
+    object-fit: cover;
+    overflow: hidden;
   }
 `;
 
@@ -65,14 +68,14 @@ const Inputs = styled.div`
   align-items: center;
 
   .action-select {
-    height: 10rem;
+    height: clamp(6rem, 12vw, 12rem);
     display: flex;
     width: 80%;
     justify-content: space-between;
     align-items: end;
 
     p {
-      font-size: 2.25rem;
+      font-size: clamp(1.75rem, 2.25vw, 2.25rem);
       font-family: "Lusitana", serif;
       font-weight: 400;
       font-style: normal;
@@ -90,13 +93,15 @@ export const Form = styled.form`
   width: 80%;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: clamp(1rem, 1.5vw, 1.5rem);
 
   p {
     display: flex;
     justify-content: center;
     color: ${(props) => props.theme.textColorPrimary};
     font-family: "Inter", sans-serif;
+    text-align: center;
+    font-size: clamp(0.75rem, 1vw, 0.9rem);
   }
 
   input[type="text"],
@@ -106,7 +111,7 @@ export const Form = styled.form`
   select {
     background-color: ${(props) => props.theme.SecondaryColor};
     color: ${(props) => props.theme.primaryColor};
-    height: 3rem;
+    height: clamp(2rem, 3vw, 3rem);
     padding-left: 1rem;
     border: none;
     border-radius: 0.5rem;
@@ -124,7 +129,6 @@ export const Form = styled.form`
 
   input[type="date"] {
     width: 62%;
-
     border-right: 10px solid transparent;
   }
 
@@ -173,7 +177,7 @@ export const Form = styled.form`
       background-color: ${(props) => props.theme.SecondaryColor};
       color: ${(props) => props.theme.textColorSecondary};
       padding-left: 0rem;
-      width: 10rem;
+      width: clamp(7rem, 10vw, 10rem);
       height: 3rem;
       border-radius: 0.5rem;
       border: none;

@@ -17,14 +17,14 @@ interface UseFormInputs {
 }
 
 const Register: React.FC = () => {
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<Array<string>>([""]);
   const [page, setPage] = useState<1 | 2>(1);
 
   const {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+
     getValues,
   } = useForm<UseFormInputs>({
     defaultValues: {
@@ -49,7 +49,6 @@ const Register: React.FC = () => {
       minDate.setFullYear(currentDate.getFullYear() - 100);
       const selectedDate = new Date(data.birthDate);
       if (selectedDate < minDate || selectedDate > currentDate) {
-        setError("Please select a birth date within the last 100 years.");
         return;
       }
       reset();
@@ -58,43 +57,76 @@ const Register: React.FC = () => {
     }
   };
 
-  const handleNextButtonClick = () => {
+  const handleBackButton = () => {
+    setError([]);
+    setPage(1);
+  };
+
+  const validateUserData = () => {
     const formData = getValues();
+    const newErrors = [];
+    const specialChars = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~0-9]/;
+    if (formData.login.length < 8) {
+      newErrors.push("Login must contain at least 8 characters.");
+    }
+    if (!specialChars.test(formData.login)) {
+      newErrors.push("Login must contain at least 1 special character");
+    }
+    if (formData.password.length < 8) {
+      newErrors.push("Password must contain at least 8 characters.");
+    }
+    if (!specialChars.test(formData.password)) {
+      newErrors.push("Password must contain at least 1 special character");
+    }
+    if (!validator.isEmail(formData.email)) {
+      newErrors.push("Invalid email address.");
+    }
+    if (formData.password !== formData.repeatPassword) {
+      newErrors.push("Passwords do not match.");
+    }
 
-    const emailIsValid = validator.isEmail(formData.email);
-    const passwordsMatch = formData.password === formData.repeatPassword;
+    setError(newErrors);
 
-    if (!formData.login) setError("Please enter a login.");
-    else if (!emailIsValid) {
-      setError("Please enter a valid email address.");
-    } else if (!formData.password) {
-      setError("Please enter a password.");
-    } else if (formData.password.length < 8) {
-      setError("Password must contain at least 8 characters");
-    } else if (!formData.repeatPassword) {
-      setError("Please repeat your password.");
-    } else if (!passwordsMatch) {
-      setError("Passwords do not match.");
-    } else {
-      setError("");
+    if (newErrors.length === 0) {
       setPage(2);
     }
   };
 
-  const handleSignupButton = () => {
+  const validatePersonalInfo = () => {
     const formData = getValues();
+    const currentDate = new Date();
+    const minDate = new Date();
+    minDate.setFullYear(currentDate.getFullYear() - 100);
+    const selectedDate = new Date(formData.birthDate);
+    const newErrors = [];
 
-    if (!formData.username) setError("Please enter a username.");
-    else if (!formData.firstName) {
-      setError("Please enter your name.");
-    } else if (!formData.lastName) {
-      setError("Please enter your surname.");
-    } else if (!formData.birthDate) {
-      setError("Please select your date of birth.");
-    } else {
-      setError("");
+    if (formData.username.length < 8) {
+      newErrors.push("Username must contain at least 8 characters.");
+    }
+    if (formData.firstName.length < 3) {
+      newErrors.push("Name must contain at least 3 characters.");
+    }
+    if (formData.lastName.length < 3) {
+      newErrors.push("Surname must contain at least 3 characters.");
+    }
+
+    if (
+      selectedDate < minDate ||
+      selectedDate > currentDate ||
+      !formData.birthDate
+    ) {
+      newErrors.push("Birth of year must be within 100 years.");
+    }
+
+    setError(newErrors);
+
+    if (newErrors.length === 0) {
       setPage(2);
     }
+  };
+
+  const isSpecialChar = (value: string) => {
+    return /[!@#$%^&*(),.?":{}|<>]/.test(value);
   };
 
   return (
@@ -102,7 +134,11 @@ const Register: React.FC = () => {
       {page === 1 ? (
         <>
           <input
-            {...register("login", { required: true })}
+            {...register("login", {
+              required: true,
+              minLength: 8,
+              validate: isSpecialChar,
+            })}
             placeholder="Login"
             type="text"
             key={"login"}
@@ -114,37 +150,41 @@ const Register: React.FC = () => {
             key={"email"}
           />
           <input
-            {...register("password", { required: true, minLength: 8 })}
+            {...register("password", {
+              required: true,
+              minLength: 8,
+              validate: isSpecialChar,
+            })}
             placeholder="Password"
             type="password"
             key={"password"}
           />
           <input
-            {...register("repeatPassword", { required: true, minLength: 8 })}
+            {...register("repeatPassword", { required: true })}
             placeholder="Repeat password"
             type="password"
             key={"repeatPassword"}
           />
           <div className="submitButton" style={{ marginTop: "3.1rem" }}>
-            <button onClick={() => handleNextButtonClick()}>Next</button>
+            <button onClick={() => validateUserData()}>Next</button>
           </div>
         </>
       ) : (
         <>
           <input
-            {...register("username", { required: true })}
+            {...register("username", { required: true, minLength: 8 })}
             placeholder="Username"
             type="text"
             key={"username"}
           />
           <input
-            {...register("firstName", { required: true })}
+            {...register("firstName", { required: true, minLength: 3 })}
             placeholder="Name"
             type="text"
             key={"firstName"}
           />
           <input
-            {...register("lastName", { required: true })}
+            {...register("lastName", { required: true, minLength: 3 })}
             placeholder="Surname"
             type="text"
             key={"lastName"}
@@ -170,15 +210,19 @@ const Register: React.FC = () => {
           </div>
           <div className="buttons" style={{ marginTop: "1rem" }}>
             <div className="submitButton">
-              <button onClick={() => setPage(1)}>Previous</button>
+              <button onClick={() => handleBackButton()}>Back</button>
             </div>
             <div className="submitButton">
-              <button onClick={() => handleSignupButton()}>Sign up</button>
+              <button onClick={() => validatePersonalInfo()}>Sign up</button>
             </div>
           </div>
         </>
       )}
-      <p>{error}</p>
+      <div className="errors">
+        {error.map((err, index) => (
+          <p key={index}>{err}</p>
+        ))}
+      </div>
     </Form>
   );
 };

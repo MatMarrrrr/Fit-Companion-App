@@ -42,7 +42,7 @@ const themes: Record<string, Theme> = {
 };
 
 const App: React.FC = () => {
-  const [theme, setTheme] = useState("dark");
+  const [theme] = useState("dark");
 
   return (
     <ThemeProvider theme={themes[theme]}>

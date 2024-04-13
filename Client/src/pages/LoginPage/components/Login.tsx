@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import styled from "styled-components";
 import { Form } from "../LoginPage";
 
 interface UseFormInputs {
@@ -9,7 +8,7 @@ interface UseFormInputs {
 }
 
 const Login: React.FC = () => {
-  const [error, setError] = useState<string>("chuj chuj chuj");
+  const [error] = useState<string>("");
 
   const { register, reset, handleSubmit } = useForm<UseFormInputs>({
     defaultValues: {
@@ -46,6 +45,7 @@ const Login: React.FC = () => {
       <div className="submitButton">
         <input type="submit" value={"Sign in"} />
       </div>
+      <p>{error}</p>
     </Form>
   );
 };
